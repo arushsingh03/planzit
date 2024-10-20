@@ -1,12 +1,7 @@
-import { redirect } from "next/navigation";
-import { auth } from "../lib/auth"
+import { requireuser } from "../lib/hooks";
 
 export default async function DashboardPage() {
-  const session  = await auth();
-
-  if (!session?.user) {
-    return redirect("/");
-  }
+  const session = await requireuser();
 
   return (
     <div>
