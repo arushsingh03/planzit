@@ -2,6 +2,8 @@ import "./globals.css";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { Roboto } from '@next/font/google';
+import { ThemeProvider } from "./components/ThemeProvider";
+
 
 const geistSans = localFont({
   src: "/fonts/GeistVF.woff",
@@ -32,8 +34,15 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${roboto.className} antialiased`}
-      >
-        {children}
+      > 
+      <ThemeProvider
+      attribute="class"
+      defaultTheme="system"
+      enableSystem
+      disableTransitionOnChange
+    >
+      {children}
+    </ThemeProvider>
       </body>
     </html>
   );

@@ -5,6 +5,25 @@
 body {
   font-family: Arial, Helvetica, sans-serif;
 }
+:root {
+  --font-geist-sans: 'Geist Sans', sans-serif;
+  --font-geist-mono: 'Geist Mono', monospace;
+  --font-roboto: 'Roboto', sans-serif;
+}
+
+/* Tailwind Custom Classes */
+.font-geist-sans {
+  font-family: var(--font-geist-sans);
+}
+
+.font-geist-mono {
+  font-family: var(--font-geist-mono);
+}
+
+.font-roboto {
+  font-family: var(--font-roboto);
+}
+
 
 @layer utilities {
   .text-balance {
