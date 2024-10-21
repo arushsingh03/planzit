@@ -1,14 +1,7 @@
-import { requireuser } from "../lib/hooks";
+import { requireUser } from "../lib/hooks";
 
 export default async function DashboardPage() {
-  const session = await requireuser();
+  const session = await requireUser();
 
-  return (
-    <div>
-      Dash Board
-    </div>
-  )
+  return <div>DashBoard Page</div>;
 }
-
-
-
