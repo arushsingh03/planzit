@@ -16,6 +16,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { onboardingSchema } from "../lib/zodSchemas";
+import { SubmitButton } from "../components/SubmitButtons";
 
 export default function Onboarding() {
   const [lastResult, action] = useFormState(OnboardingAction, undefined);
@@ -75,7 +76,7 @@ export default function Onboarding() {
             </div>
           </CardContent>
           <CardFooter>
-            <Button className="w-full">Submit</Button>
+            <SubmitButton text="Create Profile" className="w-full" />
           </CardFooter>
         </form>
       </Card>
