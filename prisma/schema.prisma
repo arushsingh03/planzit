@@ -68,7 +68,7 @@ model Availability {
   id String @id @default(uuid())
 
   day      Day
-  fromTme  String
+  fromTime String
   tillTime String
   isActive Boolean @default(true)
 

@@ -3,6 +3,7 @@
 import prisma from "./lib/db";
 import { requireUser } from "./lib/hooks";
 import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 import { parseWithZod } from "@conform-to/zod"
 import { onboardingSchema, onboardingSchemaValidation, settingsSchema } from "./lib/zodSchemas";
 
@@ -41,37 +42,37 @@ export async function OnboardingAction(prevState: any, formData: FormData) {
                     data: [
                         {
                             day: "Monday",
-                            fromTme: "08:00",
-                            tillTime: "18:00"
+                            fromTime: "08:00",
+                            tillTime: "06:00"
                         },
                         {
                             day: "Tuesday",
-                            fromTme: "08:00",
+                            fromTime: "08:00",
                             tillTime: "18:00"
                         },
                         {
                             day: "Wednesday",
-                            fromTme: "08:00",
+                            fromTime: "08:00",
                             tillTime: "18:00"
                         },
                         {
                             day: "Thursday",
-                            fromTme: "08:00",
+                            fromTime: "08:00",
                             tillTime: "18:00"
                         },
                         {
                             day: "Friday",
-                            fromTme: "08:00",
+                            fromTime: "08:00",
                             tillTime: "18:00"
                         },
                         {
                             day: "Saturday",
-                            fromTme: "08:00",
+                            fromTime: "08:00",
                             tillTime: "18:00"
                         },
                         {
                             day: "Sunday",
-                            fromTme: "08:00",
+                            fromTime: "08:00",
                             tillTime: "18:00"
                         },
                     ]
@@ -123,4 +124,22 @@ export async function updateAvailabilityAction(formData: FormData) {
             tillTime: rawData[`tillTime-${id}`] as string,
         };
     });
+
+    try {
+        await prisma.$transaction(
+            availabilityData.map((item) => prisma.availability.update({
+                where: {
+                    id: item.id
+                },
+                data: {
+                    isActive: item.isActive,
+                    fromTime: item.fromTime,
+                    tillTime: item.tillTime,
+                },
+            }))
+        );
+        revalidatePath("/dashboard/availability");
+    } catch (error) {
+        console.log(error);
+    }
 }

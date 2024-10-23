@@ -19,6 +19,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { updateAvailabilityAction } from "@/app/actions";
 import { SubmitButton } from "@/app/components/SubmitButtons";
 
 async function getData(userId: string) {
@@ -46,7 +47,7 @@ export default async function AvailabilityRoute() {
           Manage your availability in this section!
         </CardDescription>
       </CardHeader>
-      <form>
+      <form action={updateAvailabilityAction}>
         <CardContent className="flex flex-col gap-y-4">
           {data.map((item) => (
             <div
@@ -62,7 +63,7 @@ export default async function AvailabilityRoute() {
                 <p>{item.day}</p>
               </div>
 
-              <Select name={`fromTime-${item.id}`} defaultValue={item.fromTme}>
+              <Select name={`fromTime-${item.id}`} defaultValue={item.fromTime}>
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Available from" />
                 </SelectTrigger>
