@@ -6,6 +6,7 @@ import { redirect } from "next/navigation";
 import { parseWithZod } from "@conform-to/zod"
 import { onboardingSchema, onboardingSchemaValidation, settingsSchema } from "./lib/zodSchemas";
 
+
 export async function OnboardingAction(prevState: any, formData: FormData) {
     const session = await requireUser();
 
@@ -24,7 +25,7 @@ export async function OnboardingAction(prevState: any, formData: FormData) {
         async: true
     });
 
-    if(submission.status !== "success") {
+    if (submission.status !== "success") {
         return submission.reply();
     }
 
@@ -35,6 +36,47 @@ export async function OnboardingAction(prevState: any, formData: FormData) {
         data: {
             userName: submission.value.userName,
             name: submission.value.Name,
+            availability: {
+                createMany: {
+                    data: [
+                        {
+                            day: "Monday",
+                            fromTme: "08:00",
+                            tillTime: "18:00"
+                        },
+                        {
+                            day: "Tuesday",
+                            fromTme: "08:00",
+                            tillTime: "18:00"
+                        },
+                        {
+                            day: "Wednesday",
+                            fromTme: "08:00",
+                            tillTime: "18:00"
+                        },
+                        {
+                            day: "Thursday",
+                            fromTme: "08:00",
+                            tillTime: "18:00"
+                        },
+                        {
+                            day: "Friday",
+                            fromTme: "08:00",
+                            tillTime: "18:00"
+                        },
+                        {
+                            day: "Saturday",
+                            fromTme: "08:00",
+                            tillTime: "18:00"
+                        },
+                        {
+                            day: "Sunday",
+                            fromTme: "08:00",
+                            tillTime: "18:00"
+                        },
+                    ]
+                }
+            }
         },
     });
 
@@ -48,7 +90,7 @@ export async function SettingsAction(prevState: any, formData: FormData) {
         schema: settingsSchema,
     });
 
-    if(submission.status !== "success") {
+    if (submission.status !== "success") {
         return submission.reply();
     }
 
@@ -63,4 +105,22 @@ export async function SettingsAction(prevState: any, formData: FormData) {
     });
 
     return redirect("/dashboard")
+}
+
+export async function updateAvailabilityAction(formData: FormData) {
+    const session = await requireUser()
+
+    const rawData = Object.fromEntries(formData.entries())
+
+    const availabilityData = Object.keys(rawData).filter((key) => key.startsWith("id-")
+    ).map((key) => {
+        const id = key.replace("id-", "");
+
+        return {
+            id,
+            isActive: rawData[`isActive-${id}`] === "on",
+            fromTime: rawData[`fromTime-${id}`] as string,
+            tillTime: rawData[`tillTime-${id}`] as string,
+        };
+    });
 }

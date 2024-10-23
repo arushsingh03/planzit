@@ -1,8 +1,10 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import { Roboto } from '@next/font/google';
+import { ourFileRouter } from "./api/uploadthing/core";
+import { extractRouterConfig } from "uploadthing/server";
 import { ThemeProvider } from "./components/ThemeProvider";
+import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
 
 
 const geistSans = localFont({
@@ -14,10 +16,6 @@ const geistMono = localFont({
   src: "/fonts/GeistMonoVF.woff",
   variable: "--font-geist-mono",
   weight: "100 900",
-});
-const roboto = Roboto({
-  weight: '400',
-  subsets: ['latin'],
 });
 
 export const metadata: Metadata = {
@@ -33,7 +31,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${roboto.className} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       > 
       <ThemeProvider
       attribute="class"
@@ -41,6 +39,9 @@ export default function RootLayout({
       enableSystem
       disableTransitionOnChange
     >
+      <NextSSRPlugin
+          routerConfig={extractRouterConfig(ourFileRouter)}
+        />
       {children}
     </ThemeProvider>
       </body>

@@ -1,10 +1,13 @@
 import Link from "next/link";
 import Image from "next/image";
+import prisma from "../lib/db";
 import { ReactNode } from "react";
 import Logo from "@/public/logo.png";
 import { signOut } from "../lib/auth";
 import { requireUser } from "../lib/hooks";
+import { redirect } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import { Toaster } from "@/components/ui/sonner";
 import { ThemeToggle } from "../components/ThemeToggle";
 import { LogOut, Menu, Settings2 } from "lucide-react";
 import { DashboarLinks } from "../components/DashboardLinks";
@@ -17,8 +20,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import prisma from "../lib/db";
-import { redirect } from "next/navigation";
 
 
 async function getData(userId: string) {
@@ -142,6 +143,7 @@ export default async function DashboardLayout({
           </main>
         </div>
       </div>
+      <Toaster richColors closeButton/>
     </>
   );
 }
