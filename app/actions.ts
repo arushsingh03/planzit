@@ -5,7 +5,11 @@ import { requireUser } from "./lib/hooks";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { parseWithZod } from "@conform-to/zod"
-import { onboardingSchema, onboardingSchemaValidation, settingsSchema } from "./lib/zodSchemas";
+import {
+    eventTypeSchema,
+    onboardingSchemaValidation,
+    settingsSchema
+} from "./lib/zodSchemas";
 
 
 export async function OnboardingAction(prevState: any, formData: FormData) {
@@ -142,4 +146,29 @@ export async function updateAvailabilityAction(formData: FormData) {
     } catch (error) {
         console.log(error);
     }
+}
+
+export async function createEventTypeAction(prevState: any, formData: FormData) {
+    const session = await requireUser();
+
+    const submission = parseWithZod(formData, {
+        schema: eventTypeSchema,
+    });
+
+    if (submission.status !== "success") {
+        return submission.reply();
+    }
+
+    await prisma.eventType.create({
+        data: {
+            title: submission.value.title,
+            duration: submission.value.duration,
+            description: submission.value.description,
+            url: submission.value.url,
+            videoCallSoftware: submission.value.videoCallSoftware,
+            userId: session.user?.id,
+        },
+    });
+
+    return redirect("/dashboard");
 }

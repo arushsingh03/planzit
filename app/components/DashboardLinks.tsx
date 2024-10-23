@@ -30,8 +30,8 @@ export const dashboardLinks: iAppProps[] = [
   },
   {
     id: 1,
-    name: "Meetings",
-    href: "/dashboard/meetings",
+    name: "Sessions",
+    href: "/dashboard/sessions",
     icon: Users2,
   },
   {
