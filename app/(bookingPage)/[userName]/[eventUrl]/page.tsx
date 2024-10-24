@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { Separator } from "@/components/ui/separator";
 import { Card, CardContent } from "@/components/ui/card";
 import { CalendarRange, Clock, VideoIcon } from "lucide-react";
+import { Calendar } from "@/app/components/bookingForm/Calendar";
 
 async function getData(eventUrl: string, userName: string) {
   const data = await prisma.eventType.findFirst({
@@ -102,7 +103,7 @@ export default async function BookingFormRoute({
           <Separator orientation="vertical" className="h-full w-[1px]" />
 
           {/* Right section - empty for now but maintains grid layout */}
-          <div>{/* Content for the right section */}</div>
+          <Calendar />
         </CardContent>
       </Card>
     </div>
