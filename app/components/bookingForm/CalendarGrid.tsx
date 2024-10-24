@@ -1,6 +1,6 @@
 import { CalendarState } from "react-stately";
 import { CalendarCell } from "./CalendarCell";
-import { useCalendarGrid, useLocale } from "react-aria";
+import { DateValue, useCalendarGrid, useLocale } from "react-aria";
 import {
   DateDuration,
   endOfMonth,
@@ -10,9 +10,11 @@ import {
 export function CalendarGrid({
   state,
   offset = {},
+  isDateUnavailable,
 }: {
   state: CalendarState;
   offset?: DateDuration;
+  isDateUnavailable?: (data: DateValue) => boolean;
 }) {
   const startDate = state.visibleRange.start.add(offset);
   const endDate = endOfMonth(startDate);
@@ -48,6 +50,7 @@ export function CalendarGrid({
                     key={i}
                     state={state}
                     date={date}
+                    isUnavailable={isDateUnavailable?.(date)}
                   />
                 ) : (
                   <td key={i} />

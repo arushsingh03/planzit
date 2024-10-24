@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { Separator } from "@/components/ui/separator";
 import { Card, CardContent } from "@/components/ui/card";
 import { CalendarRange, Clock, VideoIcon } from "lucide-react";
-import { Calendar } from "@/app/components/bookingForm/Calendar";
+import { RenderCalendar } from "@/app/components/bookingForm/RenderCalendar";
 
 async function getData(eventUrl: string, userName: string) {
   const data = await prisma.eventType.findFirst({
@@ -44,10 +44,24 @@ async function getData(eventUrl: string, userName: string) {
 
 export default async function BookingFormRoute({
   params,
+  searchParams,
 }: {
   params: { userName: string; eventUrl: string };
+  searchParams: { date?: string };
 }) {
   const data = await getData(params.eventUrl, params.userName);
+  const selectedDate = searchParams.date
+    ? new Date(searchParams.date)
+    : new Date();
+
+  const formattedDate = new Intl.DateTimeFormat("en-IN", {
+    weekday: "short",
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  })
+    .format(selectedDate)
+    .replace(/(\w{3})/, "$1,");
 
   return (
     <div className="min-h-screen w-screen flex items-center justify-center p-4">
@@ -79,7 +93,7 @@ export default async function BookingFormRoute({
               <p className="flex items-center">
                 <CalendarRange className="mr-2 size-4 text-primary" />
                 <span className="text-sm font-medium text-muted-foreground">
-                  10 Oct 2024
+                  {formattedDate}
                 </span>
               </p>
 
@@ -103,7 +117,10 @@ export default async function BookingFormRoute({
           <Separator orientation="vertical" className="h-full w-[1px]" />
 
           {/* Right section - empty for now but maintains grid layout */}
-          <Calendar />
+          <RenderCalendar availability={data.User?.availability as any} />
+
+          <Separator orientation="vertical" className="h-full w-[1px]" />
+
         </CardContent>
       </Card>
     </div>
