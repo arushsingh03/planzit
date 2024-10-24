@@ -1,10 +1,10 @@
 import { type CalendarState } from "react-stately";
 import { useDateFormatter } from "@react-aria/i18n";
+import { CalendarButton } from "./CalendarButton";
 import { type AriaButtonProps } from "@react-aria/button";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { VisuallyHidden } from "@react-aria/visually-hidden";
 import { FocusableElement, DOMAttributes } from "@react-types/shared";
-import { CalendarButton } from "./CalendarButton";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 
 export function CalendarHeader({
   state,
@@ -41,10 +41,10 @@ export function CalendarHeader({
       </h2>
 
       <div className="flex items-center gap-2">
-        <CalendarButton {...prevButtonProps} >
+        <CalendarButton {...prevButtonProps}>
           <ChevronLeft className="size-4" />
         </CalendarButton>
-        <CalendarButton {...nextButtonProps} >
+        <CalendarButton {...nextButtonProps}>
           <ChevronRight className="size-4" />
         </CalendarButton>
       </div>
