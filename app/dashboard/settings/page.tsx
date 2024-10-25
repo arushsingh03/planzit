@@ -22,7 +22,8 @@ async function getData(id: string) {
   return data;
 }
 
-export default async function () {
+// Name the component function
+async function SettingsPage() {
   const session = await requireUser();
   const data = await getData(session.user?.id as string);
   return (
@@ -33,3 +34,9 @@ export default async function () {
     />
   );
 }
+
+// Set display name
+SettingsPage.displayName = "SettingsPage";
+
+// Export the named component
+export default SettingsPage;

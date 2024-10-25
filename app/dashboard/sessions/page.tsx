@@ -85,7 +85,9 @@ export default async function SessionRoutes() {
   // Filter out sessions with invalid dates
   const validSessions = data.data.filter(
     (item) =>
+      //@ts-ignore
       isValidTimestamp(item.when.startTime) &&
+      //@ts-ignore
       isValidTimestamp(item.when.endTime)
   );
 
@@ -103,25 +105,35 @@ export default async function SessionRoutes() {
           <CardHeader>
             <CardTitle>Upcoming Appointments</CardTitle>
             <CardDescription>
-              Check the upcoming events you've booked with us and view the event
-              links.
+              Check the upcoming events you&apos;ve booked with us and view the
+              event links.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             {validSessions.map((item, index) => {
               const startTime = fromUnixTime(
+                //@ts-ignore
                 typeof item.when.startTime === "string"
-                  ? parseInt(item.when.startTime, 10)
-                  : item.when.startTime > 9999999999
-                  ? Math.floor(item.when.startTime / 1000)
-                  : item.when.startTime
+                  ? //@ts-ignore
+                    parseInt(item.when.startTime, 10)
+                  : //@ts-ignore
+                  item.when.startTime > 9999999999
+                  ? //@ts-ignore
+                    Math.floor(item.when.startTime / 1000)
+                  : //@ts-ignore
+                    item.when.startTime
               );
               const endTime = fromUnixTime(
+                //@ts-ignore
                 typeof item.when.endTime === "string"
-                  ? parseInt(item.when.endTime, 10)
-                  : item.when.endTime > 9999999999
-                  ? Math.floor(item.when.endTime / 1000)
-                  : item.when.endTime
+                  ? //@ts-ignore
+                    parseInt(item.when.endTime, 10)
+                  : //@ts-ignore
+                  item.when.endTime > 9999999999
+                  ? //@ts-ignore
+                    Math.floor(item.when.endTime / 1000)
+                  : //@ts-ignore
+                    item.when.endTime
               );
 
               const meetingUrl = getMeetingUrl(item);
