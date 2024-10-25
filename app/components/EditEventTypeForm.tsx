@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label";
 import { parseWithZod } from "@conform-to/zod";
 import { SubmitButton } from "./SubmitButtons";
 import { Button } from "@/components/ui/button";
-import { createEventTypeAction, EditEventTypeAction } from "../actions";
+import { EditEventTypeAction } from "../actions";
 import { eventTypeSchema } from "../lib/zodSchemas";
 import { Textarea } from "@/components/ui/textarea";
 import { ButtonGroup } from "@/components/ui/buttongroup";

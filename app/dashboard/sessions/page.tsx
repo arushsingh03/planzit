@@ -11,7 +11,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Video } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { CancelMeetingAction } from "@/app/actions";
 import { SubmitButton } from "@/app/components/SubmitButtons";
 
@@ -129,7 +128,7 @@ export default async function SessionRoutes() {
               const participantName = getParticipantName(item.participants);
 
               return (
-                <form action={CancelMeetingAction}>
+                <form action={CancelMeetingAction} key={item.id}>
                   <input type="hidden" name="eventId" value={item.id} />
                   <div
                     key={index}

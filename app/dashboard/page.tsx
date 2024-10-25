@@ -1,11 +1,10 @@
 import Link from "next/link";
 import prisma from "../lib/db";
-import { Pencil, Settings, Trash2, Users2 } from "lucide-react";
 import { notFound } from "next/navigation";
 import { requireUser } from "../lib/hooks";
-import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
 import { EmptyState } from "../components/EmptyState";
+import { Pencil, Settings, Trash2, Users2 } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,8 +14,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import PreviewLinkButton from "../components/PreviewLinkButton";
 import { CopyLinkMenuItem } from "../components/CopyLinkMenu";
+import PreviewLinkButton from "../components/PreviewLinkButton";
 import { MenuActiveSwitch } from "../components/EventTypeSwitcher";
 
 async function getData(userId: string) {

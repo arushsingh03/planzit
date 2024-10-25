@@ -6,7 +6,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { OnboardingAction } from "../actions";
 import { parseWithZod } from "@conform-to/zod";
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -56,7 +55,9 @@ export default function Onboarding() {
                 defaultValue={fields.Name.initialValue}
                 key={fields.Name.key}
               />
-              <p className="text-black font-bold text-sm">{fields.Name.errors}</p>
+              <p className="text-black font-bold text-sm">
+                {fields.Name.errors}
+              </p>
             </div>
             <div className="grid gap-y-2">
               <Label>Username</Label>
@@ -72,7 +73,9 @@ export default function Onboarding() {
                   defaultValue={fields.userName.initialValue}
                 />
               </div>
-              <p className="text-black font-bold text-sm">{fields.userName.errors}</p>
+              <p className="text-black font-bold text-sm">
+                {fields.userName.errors}
+              </p>
             </div>
           </CardContent>
           <CardFooter>
@@ -82,5 +85,4 @@ export default function Onboarding() {
       </Card>
     </div>
   );
-};
-
+}
