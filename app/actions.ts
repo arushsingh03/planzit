@@ -10,6 +10,7 @@ import {
     onboardingSchemaValidation,
     settingsSchema
 } from "./lib/zodSchemas";
+import { nylas } from "./lib/nylas";
 
 
 export async function OnboardingAction(prevState: any, formData: FormData) {
@@ -171,4 +172,96 @@ export async function createEventTypeAction(prevState: any, formData: FormData) 
     });
 
     return redirect("/dashboard");
+}
+
+export async function CreateMeetingAction(formData: FormData) {
+    const getUserData = await prisma.user.findUnique({
+        where: {
+            userName: formData.get("userName") as string,
+        },
+        select: {
+            grantEmail: true,
+            grantId: true,
+        },
+    });
+
+    if (!getUserData) {
+        throw new Error("User not found!");
+    }
+
+    const eventTypeData = await prisma.eventType.findUnique({
+        where: {
+            id: formData.get("eventTypeId") as string,
+        },
+        select: {
+            title: true,
+            description: true,
+        },
+    });
+
+    const fromTime = formData.get("fromTime") as string;
+    const eventDate = formData.get("eventDate") as string;
+    const meetingLength = Number(formData.get("MeetingLength"));
+    const provider = formData.get("provider") as string;
+
+    const startDateTime = new Date(`${eventDate}T${fromTime}:00`)
+
+    const endDateTime = new Date(startDateTime.getTime() + meetingLength * 60000)
+
+    await nylas.events.create({
+        identifier: getUserData.grantId as string,
+        requestBody: {
+            title: eventTypeData?.title,
+            description: eventTypeData?.description,
+            when: {
+                startTime: Math.floor(startDateTime.getTime() / 1000),
+                endTime: Math.floor(endDateTime.getTime() / 1000),
+            },
+            conferencing: {
+                autocreate: {},
+                provider: provider as any,
+            },
+            participants: [
+                {
+                    name: formData.get("name") as string,
+                    email: formData.get("email") as string,
+                    status: "yes",
+                }
+            ]
+        },
+        queryParams: {
+            calendarId: getUserData.grantEmail as string,
+            notifyParticipants: true,
+        }
+    });
+
+    return redirect("/success");
+}
+
+export async function CancelMeetingAction(formData: FormData) {
+    const session = await requireUser();
+
+    const userData = await prisma.user.findUnique({
+        where: {
+            id: session.user?.id,
+        },
+        select: {
+            grantEmail: true,
+            grantId: true,
+        },
+    });
+
+    if (!userData) {
+        throw new Error("User not found!")
+    }
+
+    const data = await nylas.events.destroy({
+        eventId: formData.get("eventId") as string,
+        identifier: userData.grantId as string,
+        queryParams: {
+            calendarId: userData.grantEmail as string,
+        },
+    });
+
+    revalidatePath("/dashboard/sessions");
 }

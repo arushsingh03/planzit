@@ -1,13 +1,6 @@
 import Link from "next/link";
 import prisma from "../lib/db";
-import {
-  ExternalLink,
-  Link2,
-  Pencil,
-  Settings,
-  Trash2,
-  Users2,
-} from "lucide-react";
+import { Pencil, Settings, Trash2, Users2 } from "lucide-react";
 import { notFound } from "next/navigation";
 import { requireUser } from "../lib/hooks";
 import { Switch } from "@/components/ui/switch";
@@ -22,6 +15,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import PreviewLinkButton from "../components/PreviewLinkButton";
+import { CopyLinkMenuItem } from "../components/CopyLinkMenu";
 
 async function getData(userId: string) {
   const data = await prisma.user.findUnique({
@@ -98,15 +93,17 @@ export default async function DashboardPage() {
                       <DropdownMenuSeparator />
                       <DropdownMenuGroup>
                         <DropdownMenuItem asChild>
-                          <Link href={`/${data.userName}/${item.url}`}>
-                            <ExternalLink className="mr-2 size-4" /> Preview
+                          <PreviewLinkButton
+                            href={`/${data.userName}/${item.url}`}
+                          />
+                        </DropdownMenuItem>
+                        <CopyLinkMenuItem
+                          sessionUrl={`${process.env.NEXT_PUBLIC_URL}/${data.userName}/${item.url}`}
+                        />
+                        <DropdownMenuItem asChild>
+                          <Link href={`/dashboard/event/${item.id}`}>
+                            <Pencil className="mr-2 size-2" /> Edit
                           </Link>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem>
-                          <Link2 className="mr-2 size-2" /> Copy
-                        </DropdownMenuItem>
-                        <DropdownMenuItem>
-                          <Pencil className="mr-2 size-2" /> Edit
                         </DropdownMenuItem>
                       </DropdownMenuGroup>
                       <DropdownMenuSeparator />
