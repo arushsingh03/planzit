@@ -71,7 +71,7 @@ export function SettingsForm({ email, Name, profileImage }: iAppProps) {
             <Input
               disabled
               defaultValue={email}
-              placeholder="plannerz@planzit.com"
+              placeholder="plannerz@planzIt.com"
             />
           </div>
 

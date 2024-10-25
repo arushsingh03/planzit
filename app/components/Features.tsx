@@ -11,7 +11,7 @@ const features = [
   {
     name: "Free Access",
     description:
-      "Planzit simplifies scheduling with an intuitive platform that lets you arrange meetings in minutes. Focus on what matters while we handle the details. Experience fast, hassle-free scheduling today.",
+      "PlanzIt simplifies scheduling with an intuitive platform that lets you arrange meetings in minutes. Focus on what matters while we handle the details. Experience fast, hassle-free scheduling today.",
     icon: Coins,
   },
   {
@@ -29,7 +29,7 @@ const features = [
   {
     name: "Seamless Integrations",
     description:
-      "Connect Planzit with Google Calendar and GitHub to keep your schedules in sync. Enjoy the convenience of automatic updates, ensuring that all your scheduled meetings are reflected across your favorite tools.",
+      "Connect PlanzIt with Google Calendar and GitHub to keep your schedules in sync. Enjoy the convenience of automatic updates, ensuring that all your scheduled meetings are reflected across your favorite tools.",
     icon: EarthLock,
   },
   {
@@ -41,7 +41,7 @@ const features = [
   {
     name: "Real-Time Collaboration",
     description:
-      "Engage in meetings and discussions with your team in real time. With the help of Planzit, you can share agendas, notes, and files during your meetings, allowing all participants to contribute and collaborate effectively, no matter where they are.",
+      "Engage in meetings and discussions with your team in real time. With the help of PlanzIt, you can share agendas, notes, and files during your meetings, allowing all participants to contribute and collaborate effectively, no matter where they are.",
     icon: Router,
   },
 ];
@@ -57,7 +57,7 @@ export function Features() {
           Fast-Track Your Meeting Plans!
         </h1>
         <p className="mt-6 text-base text-muted-foreground leading-snug">
-          With Planzit, scheduling meetings is quick and hassle-free! Get your
+          With PlanzIt, scheduling meetings is quick and hassle-free! Get your
           meetings set up in just minutes, ensuring a smooth and efficient
           experience. Enjoy the simplicity of fast scheduling!
         </p>

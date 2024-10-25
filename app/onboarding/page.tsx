@@ -37,7 +37,7 @@ export default function Onboarding() {
       <Card>
         <CardHeader className="text-2xl gap-2 text-center">
           <CardTitle>
-            Turn chaos into clarity with Planzit,
+            Turn chaos into clarity with PlanzIt,
             <br />
             <div className="text-purple-500">Plan it. Own it. PlanzIt.</div>
           </CardTitle>

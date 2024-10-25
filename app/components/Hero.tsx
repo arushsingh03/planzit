@@ -14,7 +14,7 @@ export function Hero() {
           <span className="block text-primary">Plan it. Own it. PlanzIt</span>
         </h1>
         <p className="max-w-[580px] mx-auto mt-4 lg:text-lg text-muted-foreground">
-          Planzit empowers you to take control of your time and achieve
+          PlanzIt empowers you to take control of your time and achieve
           <br />
           more—effortlessly! you’ll streamline your day and
           <br />
