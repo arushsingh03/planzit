@@ -128,7 +128,9 @@ export default function NewEventRoute() {
                 </SelectContent>
               </Select>
 
-              <p className="text-black font-semibold text-sm">{fields.duration.errors}</p>
+              <p className="text-black font-semibold text-sm">
+                {fields.duration.errors}
+              </p>
             </div>
 
             <div className="grid gap-y-2">

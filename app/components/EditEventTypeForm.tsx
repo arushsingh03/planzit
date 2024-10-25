@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label";
 import { parseWithZod } from "@conform-to/zod";
 import { SubmitButton } from "./SubmitButtons";
 import { Button } from "@/components/ui/button";
-import { createEventTypeAction } from "../actions";
+import { createEventTypeAction, EditEventTypeAction } from "../actions";
 import { eventTypeSchema } from "../lib/zodSchemas";
 import { Textarea } from "@/components/ui/textarea";
 import { ButtonGroup } from "@/components/ui/buttongroup";
@@ -50,10 +50,11 @@ export function EditEventForm({
   title,
   url,
 }: iAppProps) {
-  const [activePlatform, setActivePlatform] =
-    useState<VideoCallProvider>("Google Meet");
+  const [activePlatform, setActivePlatform] = useState<VideoCallProvider>(
+    callProvider as VideoCallProvider
+  );
 
-  const [lastResult, action] = useFormState(createEventTypeAction, undefined);
+  const [lastResult, action] = useFormState(EditEventTypeAction, undefined);
   const [form, fields] = useForm({
     lastResult,
 
@@ -70,20 +71,21 @@ export function EditEventForm({
     <div className="w-full h-full flex flex-1 items-center justify-center">
       <Card>
         <CardHeader>
-          <CardTitle>Create New Appointment</CardTitle>
+          <CardTitle>Edit Appointment</CardTitle>
           <CardDescription>
-            Schedule a new appointment for people to reserve with you.
+            Edit your Scheduled appointment for people to reserve with you.
           </CardDescription>
         </CardHeader>
 
         <form id={form.id} onSubmit={form.onSubmit} action={action} noValidate>
+          <input type="hidden" name="id" value={id} />
           <CardContent className="grid gap-y-5">
             <div className="flex flex-col gap-y-2">
               <Label>Title</Label>
               <Input
                 name={fields.title.name}
                 key={fields.title.key}
-                defaultValue={fields.title.initialValue}
+                defaultValue={title}
                 placeholder="Quick 30-Minute Session"
               />
               <p className="text-black font-semibold text-sm">
@@ -99,7 +101,7 @@ export function EditEventForm({
                 <Input
                   name={fields.url.name}
                   key={fields.url.key}
-                  defaultValue={fields.url.initialValue}
+                  defaultValue={url}
                   className="rounded-l-none"
                   placeholder="Example-url-1"
                 />
@@ -114,7 +116,7 @@ export function EditEventForm({
               <Textarea
                 name={fields.description.name}
                 key={fields.description.key}
-                defaultValue={fields.description.initialValue}
+                defaultValue={description}
                 placeholder="Join me in this session to connect and chat!"
               />
               <p className="text-black font-semibold text-sm">
@@ -127,7 +129,7 @@ export function EditEventForm({
               <Select
                 name={fields.duration.name}
                 key={fields.duration.key}
-                defaultValue={fields.duration.initialValue}
+                defaultValue={String(duration)}
               >
                 <SelectTrigger>
                   <SelectValue placeholder="Choose Duration for Session" />
@@ -198,7 +200,7 @@ export function EditEventForm({
             <Button asChild variant="secondary">
               <Link href="/dashboard">Cancel</Link>
             </Button>
-            <SubmitButton text="Create Event" />
+            <SubmitButton text="Edit Event" />
           </CardFooter>
         </form>
       </Card>

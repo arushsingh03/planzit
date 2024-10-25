@@ -265,3 +265,73 @@ export async function CancelMeetingAction(formData: FormData) {
 
     revalidatePath("/dashboard/sessions");
 }
+
+export async function EditEventTypeAction(prevState: any, formData: FormData) {
+    const session = await requireUser();
+
+    const submission = parseWithZod(formData, {
+        schema: eventTypeSchema,
+    });
+
+    if (submission.status !== "success") {
+        return submission.reply();
+    }
+
+    const data = await prisma.eventType.update({
+        where: {
+            id: formData.get("id") as string,
+            userId: session.user?.id
+        },
+        data: {
+            title: submission.value.title,
+            duration: submission.value.duration,
+            url: submission.value.url,
+            description: submission.value.description,
+            videoCallSoftware: submission.value.videoCallSoftware,
+        },
+    });
+
+    return redirect("/dashboard")
+}
+
+export async function updateEventTypeStatusAction(prevState: any, { eventTypeId, isChecked }:
+    { eventTypeId: string; isChecked: boolean; }) {
+    try {
+        const session = await requireUser();
+
+        const data = await prisma.eventType.update({
+            where: {
+                id: eventTypeId,
+                userId: session.user?.id,
+            },
+            data: {
+                active: isChecked,
+            },
+        });
+
+        revalidatePath("/dashboard");
+
+        return {
+            status: "success",
+            message: "Event Status Updated successfully!"
+        }
+    } catch (error) {
+        return {
+            status: "error",
+            message: "Something went wrong!",
+        }
+    }
+}
+
+export async function DeleteEventTypeAction(formData: FormData) {
+    const session = await requireUser()
+
+    const data = await prisma.eventType.delete({
+        where: {
+            id: formData.get("id") as string,
+            userId: session.user?.id,
+        },
+    });
+
+    return redirect("/dashboard");
+}

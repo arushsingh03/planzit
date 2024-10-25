@@ -22,7 +22,7 @@ export function EmptyState({
       </div>
 
       <h2 className="mt-6 text-xl font-semibold">{title}</h2>
-      <p className="mb-7  mt-2 text-base text-muted-foreground max-w-xs mx-auto">
+      <p className="mb-7 mt-2 text-base text-muted-foreground max-w-xs mx-auto">
         {description}
       </p>
 
