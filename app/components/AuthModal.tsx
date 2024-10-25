@@ -14,7 +14,7 @@ export function AuthModal() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="font-semibold text-lg">Get Started</Button>
+        <Button className="font-medium text-lg">Get Started</Button>
       </DialogTrigger>
       <DialogContent className="sm:mx-w-[360px]">
         <DialogHeader className="flex-row justify-center items-center gap-2 ">
