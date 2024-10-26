@@ -5,6 +5,7 @@ import { ourFileRouter } from "./api/uploadthing/core";
 import { extractRouterConfig } from "uploadthing/server";
 import { ThemeProvider } from "./components/ThemeProvider";
 import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
+import { Toaster } from "sonner";
 
 
 const geistSans = localFont({
@@ -43,6 +44,7 @@ export default function RootLayout({
           routerConfig={extractRouterConfig(ourFileRouter)}
         />
       {children}
+      <Toaster />
     </ThemeProvider>
       </body>
     </html>
