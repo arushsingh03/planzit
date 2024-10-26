@@ -1,30 +1,41 @@
 "use client";
 
-import Link from "next/link";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from "react";
 import { ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 
-const PreviewLinkButton = ({ href, className }: { href: string; className?: string }) => {
+const PreviewLinkButton = ({
+  href,
+  className,
+}: {
+  href: string;
+  className?: string;
+}) => {
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
-  const handleClick = () => {
+  useEffect(() => {
+    return () => setIsLoading(false);
+  }, []);
+
+  const handleClick = (e: React.MouseEvent) => {
+    e.preventDefault();
     setIsLoading(true);
-    setTimeout(() => setIsLoading(false), 1000);
+    router.push(href);
   };
 
   return (
     <Button
       variant="ghost"
-      className={className}
+      className={`w-full justify-start px-2 py-1.5 text-sm ${className}`}
       disabled={isLoading}
       onClick={handleClick}
-      asChild
     >
-      <Link href={href}>
+      <div className="flex items-center">
         <ExternalLink className="mr-2 size-4" />
-        {isLoading ? "Loading preview..." : "Preview"}
-      </Link>
+        <span>{isLoading ? "Loading preview..." : "Preview"}</span>
+      </div>
     </Button>
   );
 };

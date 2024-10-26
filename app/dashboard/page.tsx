@@ -73,17 +73,17 @@ export default async function DashboardPage() {
             </Button>
           </div>
 
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mt-6">
             {data.eventType.map((item) => (
               <div
                 key={item.id}
-                className="overflow-hidden shadow rounded-lg border relative"
+                className="overflow-hidden shadow-lg rounded-lg border relative flex flex-col justify-between h-full"
               >
-                <div className="absolute top-2 right-2">
+                <div className="absolute top-3 right-3">
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <Button variant="outline" size="icon">
-                        <Settings className="size-4" />
+                        <Settings className="w-5 h-5" />
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
@@ -102,25 +102,27 @@ export default async function DashboardPage() {
                         />
                         <DropdownMenuItem asChild>
                           <Link href={`/dashboard/event/${item.id}`}>
-                            <Pencil className="mr-2 size-2" /> Edit
+                            <Pencil className="mr-2 w-4 h-4" /> Edit
                           </Link>
                         </DropdownMenuItem>
                       </DropdownMenuGroup>
                       <DropdownMenuSeparator />
-                      <DropdownMenuItem asChild>
+                      <DropdownMenuItem
+                        className="text-red-400 hover:text-red-300"
+                        asChild
+                      >
                         <Link href={`/dashboard/event/${item.id}/delete`}>
-                          <Trash2 className="mr-2 size-2" /> Delete
+                          <Trash2 className="mr-2 w-4 h-4" /> Delete
                         </Link>
                       </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
                 </div>
 
-                <Link href="/" className="flex items-center p-5">
-                  <div className="flex shrink-0">
-                    <Users2 className="size-6" />
+                <Link href="/" className="flex items-center p-6">
+                  <div className="flex-shrink-0">
+                    <Users2 className="w-6 h-6" />
                   </div>
-
                   <div className="ml-5 w-0 flex-1">
                     <dl>
                       <dt className="text-sm font-medium text-muted-foreground">
@@ -130,6 +132,7 @@ export default async function DashboardPage() {
                     </dl>
                   </div>
                 </Link>
+
                 <div className="bg-muted px-5 py-3 flex items-center justify-between">
                   <MenuActiveSwitch
                     initialChecked={item.active}
